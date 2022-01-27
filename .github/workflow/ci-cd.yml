@@ -1,0 +1,50 @@
+name: CI-CD
+on: 
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+      steps:
+        - name: Use Node.js
+          uses: actions/setup-node@v2
+          with: 
+            node-version: '16.x'
+        - name: Install dependencies
+          run: npm install
+        - name: lint
+          run: npm run lint
+        - name: Unit tests
+          run: npm run test:ci
+        - name: Build app
+          run: npm run build:prod
+        - name: Upload artifact
+          uses: actions/upload-artifact@v2
+          with: 
+            name: devops-test-${{ github.run_id }}-${{ github.run_number }}
+            path: ./dist/devops-test
+
+  test: 
+    runs-on: ubuntun-latest
+      steps: 
+        - name: Dowload artifact
+          uses: actions/dowload-artifact@v2
+          with: 
+            name: devops-test-${{ github.run_id }}-${{ github.run_number }} 
+            path: './build'
+  
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Copy repository contents via scp
+        uses: appleboy/scp-action@master
+        env:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PORT: ${{ secrets.PORT }}
+          KEY: ${{ secrets.SSHKEY }}
+        with:
+          source: "./build"
+          target: "/var/www/mywebsite"
