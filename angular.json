@@ -103,16 +103,28 @@
             ],
             "scripts": []
           },
-          "configurations": {  
+          "configurations": {
             "ci": {
               "watch": false,
               "progress": false,
-              "browsers": "ChromeHeadlessCI"  
+              "browsers": "ChromeHeadlessCI"
             }
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
     }
   },
-  "defaultProject": "devops-test"
+  "defaultProject": "devops-test",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }
