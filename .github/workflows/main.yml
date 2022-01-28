@@ -14,56 +14,54 @@ jobs:
     
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Use Node.js
-        uses: actions/setup-node@v2
-        with: 
-          node-version: '16.x'
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with: 
+        node-version: '16.x'
 
-      - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: npm install
-      
-      - name: lint
-        run: npm run lint
-      
-      - name: Unit tests
-        run: npm run test:ci
-      
-      - name: Build app
-        run: npm run build:prod
-      
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with: 
-          name: devops-test-${{ github.run_id }}-${{ github.run_number }}
-          path: ./dist/devops-test
+    - name: Install dependencies
+      run: npm install
+    
+    - name: lint
+      run: npm run lint
+    
+    - name: Unit tests
+      run: npm run test:ci
+    
+    - name: Build app
+      run: npm run build:prod
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with: 
+        name: devops-test-${{ github.run_id }}-${{ github.run_number }}
+        path: ./dist/devops-test
 
   test: 
     needs: build
     runs-on: ubuntu-latest
 
     steps: 
-      - name: Dowload artifact
-        uses: actions/download-artifact@v2
-        with: 
-          name: devops-test-${{ github.run_id }}-${{ github.run_number }} 
-          path: './build'
+    - name: Dowload artifact
+      uses: actions/download-artifact@v2
+      with: 
+        name: devops-test-${{ github.run_id }}-${{ github.run_number }} 
+        path: './build'
   
   deploy:
     needs: [ build, test ]
     runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@v2
-      
-      - name: Copy repository contents via scp
-        uses: appleboy/scp-action@master
-        env:
-          HOST: ${{ secrets.HOST }}
-          USERNAME: ${{ secrets.USERNAME }}
-          PORT: ${{ secrets.PORT }}
-          KEY: ${{ secrets.SSHKEY }}
-        with:
-          source: "./build"
-          target: "/var/www/mywebsite"
+    - uses: actions/checkout@v2
+    - name: copy file via ssh password
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        source: './build'
+        target: '/var/www/mywebsite'
