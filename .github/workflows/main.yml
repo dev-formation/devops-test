@@ -67,5 +67,5 @@ jobs:
         key: ${{ secrets.SSHKEY }}
         port: ${{ secrets.PORT }}
         source: './build/'
-        target: '/test'  
+        target: '/home/${{ secrets.USERNAME }}'  
     
