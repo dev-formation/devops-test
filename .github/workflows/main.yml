@@ -40,8 +40,9 @@ jobs:
           path: ./dist/devops-test
 
   test: 
+    needs: build
     runs-on: ubuntu-latest
-    
+
     steps: 
       - name: Dowload artifact
         uses: actions/dowload-artifact@v2
