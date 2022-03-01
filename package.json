@@ -3,13 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server",
     "build": "ng build",
     "build:prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test:ci": "ng test --configuration=ci",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "heroku-postbuild": "ng build -prod"
   },
   "private": true,
   "dependencies": {
@@ -21,6 +22,8 @@
     "@angular/platform-browser": "~13.0.0",
     "@angular/platform-browser-dynamic": "~13.0.0",
     "@angular/router": "~13.0.0",
+    "express": "^4.17.3",
+    "path": "^0.12.7",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
@@ -47,5 +50,9 @@
     "karma-jasmine-html-reporter": "~1.7.0",
     "puppeteer": "^13.1.2",
     "typescript": "~4.4.3"
+  },
+  "engines": {
+    "node": "v16.13.1",
+    "npm": "8.5.2"
   }
 }

@@ -57,12 +57,14 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
 
-    steps: 
-    - name: Dowload artifact
-      uses: actions/download-artifact@v2
-      with: 
-        name: devops-test-${{ github.run_id }}-${{ github.run_number }} 
-        path: './build'
+    steps:
+    - uses: actions/checkout@v2
+
+    # - name: Dowload artifact
+    #   uses: actions/download-artifact@v2
+    #   with: 
+    #     name: devops-test-${{ github.run_id }}-${{ github.run_number }} 
+    #     path: './build'
     # - run: git config user.email "jeremy.bojko@protonmail.com" && git config user.name "Jeremy-Bojko" && git add -A && git commit -m "Updated code"
 
     - name: Deploy to Heroku
@@ -71,5 +73,4 @@ jobs:
         heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
         heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
         heroku_email: ${{ secrets.HEROKU_EMAIL }}
-        appdir: "./build"
     
