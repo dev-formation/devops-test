@@ -31,6 +31,7 @@ jobs:
   #     run: npm run test:ci
     
   # build: 
+  #   needs: test
   #   runs-on: ubuntu-latest
 
   #   steps:
@@ -57,15 +58,12 @@ jobs:
     # needs: build
     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
-
+    steps: 
     # - name: Dowload artifact
     #   uses: actions/download-artifact@v2
     #   with: 
     #     name: devops-test-${{ github.run_id }}-${{ github.run_number }} 
     #     path: './build'
-    # - run: git config user.email "jeremy.bojko@protonmail.com" && git config user.name "Jeremy-Bojko" && git add -A && git commit -m "Updated code"
 
     - name: Deploy to Heroku
       uses: akhileshns/heroku-deploy@v3.12.12
