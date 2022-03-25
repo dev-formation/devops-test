@@ -71,6 +71,7 @@ jobs:
         host: ${{ secrets.AZURE_HOST }}
         username: ${{ secrets.AZURE_USERNAME }}
         key: ${{ secrets.AZURE_SSHKEY }}
+        passphrase: ${{ secrets.AZURE_PASSPHRASE }}
         script: ls
 
     - name: copy file via ssh password
@@ -79,6 +80,7 @@ jobs:
         host: ${{ secrets.AZURE_HOST }}
         username: ${{ secrets.AZURE_USERNAME }}
         key: ${{ secrets.AZURE_SSHKEY }}
+        passphrase: ${{ secrets.AZURE_PASSPHRASE }}
         source: './build/'
         target: '/var/www/'
     
