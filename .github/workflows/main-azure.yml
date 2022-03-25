@@ -81,6 +81,6 @@ jobs:
         username: ${{ secrets.AZURE_USERNAME }}
         key: ${{ secrets.AZURE_SSHKEY }}
         passphrase: ${{ secrets.AZURE_PASSPHRASE }}
-        source: './build/*'
-        target: '/var/www/html'
+        source: './build'
+        target: '/var/www/html/'
     
