@@ -82,5 +82,5 @@ jobs:
         key: ${{ secrets.AZURE_SSHKEY }}
         passphrase: ${{ secrets.AZURE_PASSPHRASE }}
         source: './build/'
-        target: '/var/www/'
+        target: '/var/www/html'
     
